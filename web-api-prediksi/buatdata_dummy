@@ -1,0 +1,41 @@
+import pandas as pd
+import numpy as np
+
+# Jumlah sampel
+num_samples = 10000
+
+# Generate data secara acak
+np.random.seed(52)
+
+tinggi_tanaman = np.random.uniform(5, 30, num_samples)  # cm
+suhu_air = np.random.uniform(14, 32, num_samples)  # °C
+suhu_ruang = np.random.uniform(20, 35, num_samples)  # °C
+ph_air = np.random.uniform(5.0, 7.5, num_samples)  # pH air
+intensitas_cahaya = np.random.uniform(2000, 20000, num_samples)  # Lux
+kelembapan = np.random.uniform(30, 90, num_samples)  # Persentase
+
+# Kategorisasi pertumbuhan
+kategori_pertumbuhan = []
+for i in range(num_samples):
+    if tinggi_tanaman[i] > 15 and 6.0 <= ph_air[i] <= 7.0 and intensitas_cahaya[i] > 12000:
+        kategori_pertumbuhan.append("Baik")
+    elif 10 <= tinggi_tanaman[i] <= 15 and 5.5 <= ph_air[i] <= 6.5:
+        kategori_pertumbuhan.append("Sedang")
+    else:
+        kategori_pertumbuhan.append("Buruk")
+
+# Simpan dalam dataframe
+df = pd.DataFrame({
+    "tinggi_tanaman": tinggi_tanaman,
+    "suhu_air": suhu_air,
+    "suhu_ruang": suhu_ruang,
+    "ph_air": ph_air,
+    "intensitas_cahaya": intensitas_cahaya,
+    "kelembapan": kelembapan,
+    "kategori_pertumbuhan": kategori_pertumbuhan
+})
+
+# Simpan ke file CSV
+df.to_csv("data_pertumbuhan_tanaman.csv", index=False)
+
+print("Dataset berhasil dibuat dan disimpan sebagai 'data_pertumbuhan_tanaman.csv'")
